@@ -7,7 +7,6 @@ import {
   PerspectiveCamera,
 } from "@react-three/drei";
 import { angleToRadians } from "./utils/angle";
-
 import { TextureLoader } from "three";
 import { MapControls, Sky, Stars } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
