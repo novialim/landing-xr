@@ -11,7 +11,7 @@ export function Box(props) {
   return (
     <mesh {...props} ref={mesh}>
       <boxGeometry args={[0.2, 0.2, 0.2]} />
-      <meshBasicMaterial attach="material" color={"lightblue"} map={base} />
+      <meshBasicMaterial attach="material" color={"white"} map={base} />
     </mesh>
   );
 }
