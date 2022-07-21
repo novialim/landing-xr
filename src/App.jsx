@@ -75,11 +75,15 @@ function App() {
         Toggle VR
       </button>
       {toggleVR || isVRSite ? (
-        <VRCanvas id="three-canvas-container" shadows className="h-screen">
+        <VRCanvas
+          id="three-canvas-container"
+          shadows
+          style={{ height: "100vh" }}
+        >
           {app}
         </VRCanvas>
       ) : (
-        <Canvas shadows className="h-screen">
+        <Canvas shadows style={{ height: "100vh" }}>
           {app}
         </Canvas>
       )}
