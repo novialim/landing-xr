@@ -6,7 +6,7 @@ import {
   useTexture,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { angleToRadians } from "../../utils/angle";
 import * as THREE from "three";
 import gsap from "gsap";
@@ -16,6 +16,34 @@ import { Image } from "./Image";
 import { Box } from "./Box";
 
 export function Home() {
+  const [items, setItems] = useState(null);
+  const topRowXCoords = [-1.43, -0.63, 0.13, 0.93];
+
+  useEffect(() => {
+    window
+      .fetch(`https://graphql.contentful.com/content/v1/spaces/h3oucsholler/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Authenticate the request
+          Authorization: "Bearer CGtLIAUKAI5-keq-C-yX67WGHpDhbvaO4kUxw6uXsEI",
+        },
+        // send the GraphQL query
+        body: JSON.stringify({ query }),
+      })
+      .then((response) => response.json())
+      .then(({ data, errors }) => {
+        if (errors) {
+          console.error(errors);
+        }
+
+        // rerender the entire component with new data
+        setItems(
+          data.productCollectionCollection.items[0].productCollection.items
+        );
+      });
+  }, []);
+
   // Code to move the camera around
   const orbitControlsRef = useRef(null);
   useFrame((state) => {
@@ -36,8 +64,8 @@ export function Home() {
 
       // x-axis motion
       timeline.to(ballRef.current.position, {
-        x: 1,
-        duration: 2,
+        x: 2.2,
+        duration: 3,
         ease: "power2.out",
       });
 
@@ -95,18 +123,41 @@ export function Home() {
         castShadow
       />
 
-      {/* Images */}
-      <Image position={[-0.43, 1.45, -1.55]} />
+      {/* Row one */}
+      {items &&
+        items.map(({ name, productImage }, index) => {
+          if (index < 4) {
+            return (
+              <React.Fragment key={index}>
+                <Text
+                  position={[topRowXCoords[index], 1.55, -1.85]}
+                  text={name}
+                  size={0.08}
+                  height={0.05}
+                  color="#000000"
+                />
+                <Box
+                  position={[topRowXCoords[index] + 0.2, 1.3, -1.85]}
+                  src={productImage.url}
+                />
+              </React.Fragment>
+            );
+          }
+        })}
 
-      {/* Box */}
-      <Box position={[-1.13, 1.35, -1.85]} />
+      {/* Row two */}
+      {/* Rotating cube and text */}
+      <Box position={[-1.13, 0.55, -1.85]} />
       <Text
-        position={[-1.33, 1.55, -1.85]}
+        position={[-1.33, 0.75, -1.85]}
         text="Cube"
         size={0.1}
         height={0.05}
         color="#000000"
       />
+
+      {/* Images */}
+      <Image position={[-0.4, 0.65, -1.55]} />
 
       {/* Environmnet */}
       <Environment background>
@@ -119,3 +170,30 @@ export function Home() {
     </>
   );
 }
+
+// const query = `
+// {
+//   itemCollection {
+//     items {
+//       name
+//     }
+//   }
+// }
+// `;
+
+const query = `
+  {
+  productCollectionCollection {
+    items {
+      productCollection(limit: 4) {
+        items {
+          name
+					productImage {
+            url
+          }
+        }
+      }
+    }
+  }
+}
+`;

@@ -6,7 +6,7 @@ import img from "/images/flower.png";
 export function Box(props) {
   const mesh = useRef();
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
-  const base = new THREE.TextureLoader().load(img);
+  const base = new THREE.TextureLoader().load(props.src || img);
 
   return (
     <mesh {...props} ref={mesh}>
