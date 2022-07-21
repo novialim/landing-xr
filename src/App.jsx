@@ -78,12 +78,15 @@ function App() {
         <VRCanvas
           id="three-canvas-container"
           shadows
-          style={{ height: "100vh" }}
+          style={{ height: "100vh", position: "absolute", top: 0, left: 0 }}
         >
           {app}
         </VRCanvas>
       ) : (
-        <Canvas shadows style={{ height: "100vh" }}>
+        <Canvas
+          shadows
+          style={{ height: "100vh", position: "absolute", top: 0, left: 0 }}
+        >
           {app}
         </Canvas>
       )}
