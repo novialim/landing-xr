@@ -17,6 +17,8 @@ import MetalNormalMap from "./assets/MetalNormalMap.png";
 
 import { VRCanvas, ARCanvas } from "@react-three/xr";
 
+import { StartVideo } from "./components/zoom/StartVideo";
+
 const Plane = () => {
   // --> https://threejs.org/docs/index.html#api/en/geometries/PlaneGeometry
 
@@ -74,6 +76,12 @@ function App() {
       >
         Toggle VR
       </button>
+      <div className="absolute top-2 left-28 z-50 opacity-50 hover:opacity-100">
+        <StartVideo role={1} userName="Host" buttonText="Start Meeting" />
+      </div>
+      <div className="absolute top-2 left-60 z-50 opacity-50 hover:opacity-100">
+        <StartVideo role={0} userName="Guest" buttonText="Join Meeting" />
+      </div>
       {toggleVR || isVRSite ? (
         <VRCanvas
           id="three-canvas-container"
