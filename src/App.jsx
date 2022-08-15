@@ -74,6 +74,12 @@ function App() {
       >
         Toggle VR
       </button>
+
+      <button
+        className={`absolute top-2 left-28 z-50 opacity-50 hover:opacity-100`}
+      >
+        Zoom Button
+      </button>
       {toggleVR || isVRSite ? (
         <VRCanvas
           id="three-canvas-container"

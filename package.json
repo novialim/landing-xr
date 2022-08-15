@@ -12,6 +12,7 @@
     "@react-three/drei": "^9.17.1",
     "@react-three/fiber": "^8.2.0",
     "@react-three/xr": "^4.0.1",
+    "@zoom/videosdk": "^1.4.0",
     "gltf-pipeline": "^3.0.5",
     "gltfjsx": "^4.6.4",
     "gsap": "^3.10.4",
