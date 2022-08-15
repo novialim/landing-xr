@@ -85,6 +85,10 @@ export function Home() {
     }
   }, [ballRef.current]);
 
+  function handleClick(desc) {
+    desc && alert(desc);
+  }
+
   return (
     <>
       {/* Camera */}
@@ -105,7 +109,7 @@ export function Home() {
       <Model />
 
       {/* Text */}
-      <Text position={[-2, 0.1, 2]} text="Hello" size={0.3} height={0.02} />
+      <Text position={[-2, 0.1, 2]} text="KrisShop" size={0.3} height={0.02} />
 
       {/* Floor */}
       <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow>
@@ -125,7 +129,9 @@ export function Home() {
 
       {/* Row one */}
       {items &&
-        items.map(({ name, productImage }, index) => {
+        items.map(({ name, productImage, description }, index) => {
+          const desc = description?.json?.content[0]?.content[0]?.value;
+
           if (index < 4) {
             return (
               <React.Fragment key={index}>
@@ -139,6 +145,9 @@ export function Home() {
                 <Box
                   position={[topRowXCoords[index] + 0.2, 1.3, -1.85]}
                   src={productImage.url}
+                  onClick={() => {
+                    handleClick(desc);
+                  }}
                 />
               </React.Fragment>
             );
@@ -190,6 +199,9 @@ const query = `
           name
 					productImage {
             url
+          }
+          description {
+            json
           }
         }
       }
